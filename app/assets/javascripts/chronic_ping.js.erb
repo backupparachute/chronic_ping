@@ -5,7 +5,7 @@ var parseField = function(input_field) {
   $.ajax({
     type: "POST",
     url: "<%= ENV['RAILS_RELATIVE_URL_ROOT'].to_s.gsub(/\/$/, '') %>/chronic_ping/parse",
-    data: { q: input_field.value, f: $(input_field).data('format') },
+    data: { q: input_field.value, f: $(input_field).data('format'), c: $(input_field).data('context') },
     dataType: "json"
   }).done(function( msg ) {
     input_field.value = msg.response;
