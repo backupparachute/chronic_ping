@@ -3,7 +3,9 @@ class ChronicPingController < ActionController::Base
     unless params[:q].blank?
       begin
         format = ChronicPing.config.formats[params[:f] || :default] || params[:f]
-        response = Chronic.parse(params[:q], context: :past).strftime(format)
+        ctx = params[:c].to_sym if params[:c].present?
+        ctx ||= :past
+        response = Chronic.parse(params[:q], context: ctx).strftime(format)
 
         render :json => { status: :success, response: response }
       rescue
